@@ -1,0 +1,4 @@
+"Honest Broker Subject ID","Data Contributor ","Data Source","The last known survival status of the subject ","Age of the subject at last contact","Unit of age of at last contact","Precision of age of last contact ",Complete?
+1,"UChicago Monogenic Diabetes Research Group",Patient-reported,Alive,28,Years,Approximate,Complete
+3,Indiana,,,,,,Incomplete
+5,,,,,,,Incomplete

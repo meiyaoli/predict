@@ -1,0 +1,44 @@
+[ERROR] [sample_patient.yaml/0] 'Patient-Reported' is not one of ['Self-reported', 'EHR'] in /subject_characteristics/DATA_SOURCE
+[ERROR] [sample_patient.yaml/1] 3 is not of type 'string', 'null' in /subject_characteristics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/2] 5 is not of type 'string', 'null' in /subject_characteristics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/3] 1 is not of type 'string', 'null' in /timing/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/4] 3 is not of type 'string', 'null' in /timing/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/5] 5 is not of type 'string', 'null' in /timing/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/6] 1 is not of type 'string', 'null' in /family_medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/7] 1 is not of type 'string', 'null' in /family_medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/8] 1 is not of type 'string', 'null' in /family_medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/9] 3 is not of type 'string', 'null' in /family_medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/10] 5 is not of type 'string', 'null' in /family_medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/11] 1 is not of type 'string', 'null' in /demographics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/12] 3 is not of type 'string', 'null' in /demographics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/13] 5 is not of type 'string', 'null' in /demographics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/14] 1 is not of type 'string', 'null' in /medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/15] 1 is not of type 'string', 'null' in /medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/16] 1 is not of type 'string', 'null' in /medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/17] 3 is not of type 'string', 'null' in /medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/18] 5 is not of type 'string', 'null' in /medical_history/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/19] 1 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/20] 1 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/21] 1 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/22] 1 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/23] 3 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/24] 5 is not of type 'string', 'null' in /biometrics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/25] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 12.0, 'AGE_UNIT': 'Years', 'AGE_PRECISION': 'Approximate', 'CAUSITIVE_ALTERATION': 'Yes', 'STATUS': 'Present', 'SAMPLE_TYPE': 'Blood', 'LABORATORY_NAME': 'Invitae', 'METHOD': 'Sequencing, NGS, NOS', 'CYTOGENETIC_LOCATION': 12.0, 'GENE': 'HNF1A', 'ALTERATION_TYPE': 'Substitution', 'HGVS_ACC': 'NM_000545.5', 'HGVS_CODING': 'c.458 C>A', 'HGVS_PROTEIN': 'p.(P153H)', 'REPORTED_SIGNIFICANCE': 'Pathogenic', 'ALLELIC_STATE': 'Heterozygous'} is not valid under any of the given schemas in /genetic_analysis
+[ERROR] [sample_patient.yaml/26] 3 is not of type 'string', 'null' in /genetic_analysis/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/27] 5 is not of type 'string', 'null' in /genetic_analysis/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/28] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 12.0, 'AGE_UNIT': 'Years', 'AGE_PRECISION': 'Approximate', 'TEST_TYPE': 'HbA1c', 'METHOD': 'Laboratory Test', 'MEASUREMENT_TYPE': 'Point', 'RESULT_NUMERIC': 9.0, 'RESULT_UNIT': '%', 'FASTING_STATUS': 'Non-fasting'} is not valid under any of the given schemas in /testing
+[ERROR] [sample_patient.yaml/29] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 20.0, 'AGE_UNIT': 'Years', 'AGE_PRECISION': 'Approximate', 'TEST_TYPE': 'HbA1c', 'METHOD': 'Laboratory Test', 'MEASUREMENT_TYPE': 'Point', 'RESULT_NUMERIC': 8.0, 'RESULT_UNIT': '%', 'FASTING_STATUS': 'Non-fasting'} is not valid under any of the given schemas in /testing
+[ERROR] [sample_patient.yaml/30] 'Autoantibodies NOS' is not one of ['HbA1c', 'C-Peptide', 'Blood Glucose', 'Autoantibodies, GAD65', 'Autoantibodies, ZnT8', 'Autoantibodies, IA-2', 'Autoantibodies, Insulin', 'Autoantibodies, Islet cell', 'Autoantibodies, NOS', 'Total Cholesterol', 'Triglycerides', 'HDL', 'LDL', 'Serum Magnesium', 'Serum Potassium', 'Serum Creatinine', 'Serum BUN', 'GFR', 'Urine Microalbumin', 'Urine Creatinine', 'Microalbumin/Creatinine Ratio', 'Urine Magnesium', 'ALT', 'AST'] in /testing/TEST_TYPE
+[ERROR] [sample_patient.yaml/31] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 23.0, 'AGE_UNIT': 'Years', 'AGE_PRECISION': 'Approximate', 'TEST_TYPE': 'LDL', 'METHOD': 'Laboratory Test', 'MEASUREMENT_TYPE': 'Point', 'RESULT_NUMERIC': 95.0, 'RESULT_UNIT': 'mg/dL', 'FASTING_STATUS': 'Fasting'} is not valid under any of the given schemas in /testing
+[ERROR] [sample_patient.yaml/32] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 18.0, 'AGE_UNIT': 'Years', 'AGE_PRECISION': 'Approximate', 'TEST_TYPE': 'Blood Glucose', 'METHOD': 'Home Glucose Test', 'MEASUREMENT_TYPE': 'Average High', 'RESULT_NUMERIC': 220.0, 'RESULT_UNIT': 'mg/dL', 'FASTING_STATUS': 'Random'} is not valid under any of the given schemas in /testing
+[ERROR] [sample_patient.yaml/33] {'HONEST_BROKER_SUBJECT_ID': 1, 'AGE_AT': 21.0, 'AGE_PRECISION': 'Approximate', 'TEST_TYPE': 'C-Peptide', 'METHOD': 'Laboratory Test', 'MEASUREMENT_TYPE': 'Point', 'RESULT_MODIFIER': '<', 'RESULT_NUMERIC': 0.5, 'RESULT_UNIT': 'mg/dL', 'REFERENCE_RANGE': '0.8-3.5'} is not valid under any of the given schemas in /testing
+[ERROR] [sample_patient.yaml/34] 3 is not of type 'string', 'null' in /testing/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/35] 5 is not of type 'string', 'null' in /testing/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/36] 1 is not of type 'string', 'null' in /disease_characteristics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/37] 3 is not of type 'string', 'null' in /disease_characteristics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/38] 5 is not of type 'string', 'null' in /disease_characteristics/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/39] 'Insulin Long-acting' is not one of ['Insulin, Rapid-acting', 'Insulin, Long-acting', 'Insulin, Intermediate-acting', 'Insulin, Combination', 'Insulin, NOS', 'Biguanide', 'Sulfonylurea', 'Meglitinide', 'Thiazolidinedione', 'Dipeptidylpeptidase 4 inhibitor', 'Sodium-glucose co-transporter 2 inhibitor', 'GLP-1 receptor agonist', 'Dual GLP-1/GIP receptor agonist', 'Amylin analog', 'Alpha-glucosidase inhibitor', 'Bile acid-binding resin'] in /treatment/DM_MEDICATION_CLASS
+[ERROR] [sample_patient.yaml/40] 'Insulin Rapid-acting' is not one of ['Insulin, Rapid-acting', 'Insulin, Long-acting', 'Insulin, Intermediate-acting', 'Insulin, Combination', 'Insulin, NOS', 'Biguanide', 'Sulfonylurea', 'Meglitinide', 'Thiazolidinedione', 'Dipeptidylpeptidase 4 inhibitor', 'Sodium-glucose co-transporter 2 inhibitor', 'GLP-1 receptor agonist', 'Dual GLP-1/GIP receptor agonist', 'Amylin analog', 'Alpha-glucosidase inhibitor', 'Bile acid-binding resin'] in /treatment/DM_MEDICATION_CLASS
+[ERROR] [sample_patient.yaml/41] 1 is not of type 'string', 'null' in /treatment/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/42] 3 is not of type 'string', 'null' in /treatment/HONEST_BROKER_SUBJECT_ID
+[ERROR] [sample_patient.yaml/43] 5 is not of type 'string', 'null' in /treatment/HONEST_BROKER_SUBJECT_ID

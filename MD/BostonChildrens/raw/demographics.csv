@@ -1,0 +1,4 @@
+"Honest Broker Subject ID","The biological sex of the subject assigned at birth","The ethnicity of the subject","The race of the subject (choice=American Indian or Alaska Native)","The race of the subject (choice=Asian)","The race of the subject (choice=Black or African American)","The race of the subject (choice=Native Hawaiian or other Pacific Islander)","The race of the subject (choice=White)","The race of the subject (choice=Unknown)","The race of the subject (choice=Not Reported)",Complete?
+1,Male,"Not Hispanic or Latino",Unchecked,Unchecked,Unchecked,Unchecked,Checked,Unchecked,Unchecked,Complete
+3,,,Unchecked,Unchecked,Unchecked,Unchecked,Unchecked,Unchecked,Unchecked,Incomplete
+5,Male,,Checked,Checked,Checked,Unchecked,Unchecked,Unchecked,Unchecked,Incomplete

@@ -1,0 +1,273 @@
+- subject_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    DATA_CONTRIBUTOR_ID: UChicago Monogenic Diabetes Research Group
+    DATA_SOURCE: Patient-Reported
+    LAST_KNOWN_SURVIVAL_STATUS: Alive
+    AGE_LAST_CONTACT: 28.0
+    AGE_LAST_CONTACT_UNIT: Years
+    AGE_LAST_CONTACT_PRECISION: Approximate
+- subject_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 3
+    DATA_CONTRIBUTOR_ID: MGH
+- subject_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 5
+- timing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    TIMEPOINT: Diagnosis
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+- timing:
+    HONEST_BROKER_SUBJECT_ID: 3
+- timing:
+    HONEST_BROKER_SUBJECT_ID: 5
+- family_medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    RELATION: Father
+    CONDITION: Monogenic Diabetes
+    SOURCE: Confirmed by genetic test
+- family_medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    RELATION: Brother
+    CONDITION: Monogenic Diabetes
+    SOURCE: Confirmed by genetic test
+- family_medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    RELATION: Aunt (paternal)
+    CONDITION: Monogenic Diabetes
+    SOURCE: Confirmed by genetic test
+- family_medical_history:
+    HONEST_BROKER_SUBJECT_ID: 3
+- family_medical_history:
+    HONEST_BROKER_SUBJECT_ID: 5
+- demographics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    SEX: Male
+    ETHNICITY: Not Hispanic or Latino
+    RACE (American Indian or Alaska Native): Unchecked
+    RACE (Asian): Unchecked
+    RACE (Black or African American): Unchecked
+    RACE (Native Hawaiian or other Pacific Islander Hawaiian or other Pacific Islander): Unchecked
+    RACE (White): Checked
+    RACE (Unknown): Unchecked
+    RACE (Not Reported): Unchecked
+- demographics:
+    HONEST_BROKER_SUBJECT_ID: 3
+    RACE (American Indian or Alaska Native): Unchecked
+    RACE (Asian): Unchecked
+    RACE (Black or African American): Unchecked
+    RACE (Native Hawaiian or other Pacific Islander Hawaiian or other Pacific Islander): Unchecked
+    RACE (White): Unchecked
+    RACE (Unknown): Unchecked
+    RACE (Not Reported): Unchecked
+- demographics:
+    HONEST_BROKER_SUBJECT_ID: 5
+    SEX: Male
+    RACE (American Indian or Alaska Native): Checked
+    RACE (Asian): Checked
+    RACE (Black or African American): Checked
+    RACE (Native Hawaiian or other Pacific Islander Hawaiian or other Pacific Islander): Unchecked
+    RACE (White): Unchecked
+    RACE (Unknown): Unchecked
+    RACE (Not Reported): Unchecked
+- medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    CONDITION: Congenital Heart Defect
+    ICD_CODE: 33.0
+- medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    CONDITION: Renal cyst
+- medical_history:
+    HONEST_BROKER_SUBJECT_ID: 1
+    CONDITION: Fatty liver
+- medical_history:
+    HONEST_BROKER_SUBJECT_ID: 3
+- medical_history:
+    HONEST_BROKER_SUBJECT_ID: 5
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    MEASUREMENT_TYPE: Height/Length
+    MEASUREMENT_NUMERIC: 152.0
+    MEASUREMENT_UNIT: cm
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    MEASUREMENT_TYPE: Weight
+    MEASUREMENT_NUMERIC: 52.0
+    MEASUREMENT_UNIT: kg
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 28.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    MEASUREMENT_TYPE: Height/Length
+    MEASUREMENT_NUMERIC: 180.0
+    MEASUREMENT_UNIT: cm
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 28.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    MEASUREMENT_TYPE: Weight
+    MEASUREMENT_NUMERIC: 86.0
+    MEASUREMENT_UNIT: kg
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 3
+- biometrics:
+    HONEST_BROKER_SUBJECT_ID: 5
+- genetic_analysis:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    CAUSITIVE_ALTERATION: 'Yes'
+    STATUS: Present
+    SAMPLE_TYPE: Blood
+    LABORATORY_NAME: Invitae
+    METHOD: Sequencing, NGS, NOS
+    CYTOGENETIC_LOCATION: 12.0
+    GENE: HNF1A
+    ALTERATION_TYPE: Substitution
+    HGVS_ACC: NM_000545.5
+    HGVS_CODING: c.458 C>A
+    HGVS_PROTEIN: p.(P153H)
+    REPORTED_SIGNIFICANCE: Pathogenic
+    ALLELIC_STATE: Heterozygous
+- genetic_analysis:
+    HONEST_BROKER_SUBJECT_ID: 3
+- genetic_analysis:
+    HONEST_BROKER_SUBJECT_ID: 5
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    TEST_TYPE: HbA1c
+    METHOD: Laboratory Test
+    MEASUREMENT_TYPE: Point
+    RESULT_NUMERIC: 9.0
+    RESULT_UNIT: '%'
+    FASTING_STATUS: Non-fasting
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 20.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    TEST_TYPE: HbA1c
+    METHOD: Laboratory Test
+    MEASUREMENT_TYPE: Point
+    RESULT_NUMERIC: 8.0
+    RESULT_UNIT: '%'
+    FASTING_STATUS: Non-fasting
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 12.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    TEST_TYPE: Autoantibodies NOS
+    METHOD: Laboratory Test
+    MEASUREMENT_TYPE: Point
+    RESULT_INTERPRETATION: Negative
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 23.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    TEST_TYPE: LDL
+    METHOD: Laboratory Test
+    MEASUREMENT_TYPE: Point
+    RESULT_NUMERIC: 95.0
+    RESULT_UNIT: mg/dL
+    FASTING_STATUS: Fasting
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 18.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    TEST_TYPE: Blood Glucose
+    METHOD: Home Glucose Test
+    MEASUREMENT_TYPE: Average High
+    RESULT_NUMERIC: 220.0
+    RESULT_UNIT: mg/dL
+    FASTING_STATUS: Random
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 21.0
+    AGE_PRECISION: Approximate
+    TEST_TYPE: C-Peptide
+    METHOD: Laboratory Test
+    MEASUREMENT_TYPE: Point
+    RESULT_MODIFIER: <
+    RESULT_NUMERIC: 0.5
+    RESULT_UNIT: mg/dL
+    REFERENCE_RANGE: 0.8-3.5
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 3
+- testing:
+    HONEST_BROKER_SUBJECT_ID: 5
+- disease_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT: 20.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    DIABETES_STATUS: 'Yes'
+    HYPOGLYCEMIA_FREQUENCY: Every few months
+    SEVERE_HYPOGLYCEMIA_FREQUENCY: Never
+    DKA: 'No'
+    DIET: 'No'
+    EXERCISE: 'Yes'
+- disease_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 3
+- disease_characteristics:
+    HONEST_BROKER_SUBJECT_ID: 5
+- treatment:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT_START: 13.0
+    AGE_AT_STOP: 15.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    REASON_STOP: Planned stop
+    DM_MEDICATION_CLASS: Insulin Long-acting
+    MEDICATION_NAME: Tresiba
+    MEDICATION_CODE: Tresiba
+    MEDICATION_CONCENTRATION: U100
+    MEDICATION_DOSE: 10.0
+    MEDICATION_UNIT: Units
+    FREQUENCY: Two times a day
+    ROUTE: Subcutaneous
+- treatment:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT_START: 13.0
+    AGE_AT_STOP: 15.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    REASON_STOP: Planned stop
+    DM_MEDICATION_CLASS: Insulin Rapid-acting
+    MEDICATION_NAME: Humalog
+    MEDICATION_CODE: Humalog
+    MEDICATION_CONCENTRATION: U100
+    MEDICATION_DOSE: 2.0
+    MEDICATION_UNIT: Units
+    FREQUENCY: Before every meal
+    ROUTE: Subcutaneous
+- treatment:
+    HONEST_BROKER_SUBJECT_ID: 1
+    AGE_AT_START: 15.0
+    AGE_UNIT: Years
+    AGE_PRECISION: Approximate
+    DM_MEDICATION_CLASS: Sulfonylurea
+    MEDICATION_NAME: glipizide
+    MEDICATION_CODE: glipizide
+    MEDICATION_DOSE: 2.5
+    MEDICATION_UNIT: mg
+    FREQUENCY: Once per day
+    ROUTE: Oral
+- treatment:
+    HONEST_BROKER_SUBJECT_ID: 3
+- treatment:
+    HONEST_BROKER_SUBJECT_ID: 5
