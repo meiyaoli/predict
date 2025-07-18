@@ -73,7 +73,7 @@ class Variable:
         self.tier = parse(m, row, 3, "Tier", i)
         self.desc = parse(m, row, 4, "VariableDescription", i)
         self.codes = list(filter(None, parse(m, row, 5, "VariableCode", i).split("|")))
-        self.inotes = list(filter(None, parse(m, row, 9, "ImplementationNotes", i).split("|")))
+        self.inotes = parse(m, row, 9, "ImplementationNotes", i)
         self.mappings = list(filter(None, parse(m, row, 10, "Mappings", i).split("|")))
         self.values = OrderedDict()
         self.coded = self.type in ("Enum", "Code")
@@ -96,7 +96,7 @@ class Value:
         self.name = parse(m, row, 6, "PermissibleValue", i)
         self.desc = parse(m, row, 7, "ValueDescription", i)
         self.codes = list(filter(None, parse(m, row, 8, "ValueCode", i).split("|")))
-        self.inotes = list(filter(None, parse(m, row, 9, "ImplementationNotes", i).split("|")))
+        self.inotes = parse(m, row, 9, "ImplementationNotes", i)
         self.mappings = list(filter(None, parse(m, row, 10, "Mappings", i).split("|")))
 
     def __str__(self):
