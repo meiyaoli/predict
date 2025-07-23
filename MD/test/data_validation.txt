@@ -1,0 +1,3 @@
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'biometrics', 'Variable': 'AGE_UNIT', 'Error': "Invalid PermissibleValue 'Unlimited'"}
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'subject_characteristics', 'Variable': 'DATA_SOURCE', 'Error': "Invalid PermissibleValue 'Patient-Reported'"}
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'TEST_TYPE', 'Error': "Invalid PermissibleValue 'Autoantibodies NOS'"}

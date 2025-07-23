@@ -174,13 +174,13 @@ if all_errors:
     df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "__suffix_sort__", "Error"])
     df_errors = df_errors.drop(columns=["__priority__", "__suffix_sort__"])
 
-    output_file = "MD/BostonChildrens/validation/BCH2.txt"
+    output_file = "MD/BostonChildrens/validation/BCH.txt"
     with open(output_file, "w", encoding="utf-8") as f:
         for _, row in df_errors.iterrows():
             f.write(f"{row.to_dict()}\n")
     print(f"✓ Validation errors saved to {output_file}.")
 
-    output_xlsx = "MD/BostonChildrens/validation/BCH2.xlsx"
+    output_xlsx = "MD/BostonChildrens/validation/BCH.xlsx"
     df_errors.to_excel(output_xlsx, index=False)
     print(f"✓ Validation errors saved to {output_xlsx}.")
 else:
