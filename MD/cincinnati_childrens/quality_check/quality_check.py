@@ -45,7 +45,7 @@ def extract_suffix_number(error_msg):
     return int(match.group(1)) if match else float('inf')
 
 # Load and trim the JSON data dictionary
-with open("MD/md_v1.0.json", "r") as f:
+with open("MD/md_v1.2.json", "r") as f:
     data_dict = json.load(f)
 
 data_dict = trim_json(data_dict)
@@ -65,10 +65,11 @@ for domain_group_name, domain_group in data_dict.get("domains", {}).items():
 # File inputs
 excel_files = [
     "biometrics.xlsx", "demographics.xlsx", "disease_characteristics.xlsx",
-    "family_medical_history.xlsx", "genetic_analysis.xlsx", "testing.xlsx", "treatment.xlsx"
+    "family_medical_history.xlsx", "genetic_analysis.xlsx", "medical_history.xlsx", "subject_characteristics.xlsx",
+    "testing.xlsx", "timing.xlsx",  "treatment.xlsx"
 ]
 
-input_dir = "MD/BostonChildrens/raw"
+input_dir = "MD/cincinnati_childrens/_final"
 all_errors = []
 files_with_errors = set()
 
@@ -78,10 +79,20 @@ for file in excel_files:
     file_errors = []
 
     try:
-        df = pd.read_excel(file_path)
+        df = pd.read_excel(file_path, dtype=str)
+
+    # Clean HONEST_BROKER_SUBJECT_ID values
+        if "HONEST_BROKER_SUBJECT_ID" in df.columns:
+            df["HONEST_BROKER_SUBJECT_ID"] = (
+                df["HONEST_BROKER_SUBJECT_ID"]
+                .fillna("")
+                .astype(str)
+                .str.strip()
+                .str.replace(r"\.0$", "", regex=True)
+            )
     except Exception as e:
         print(f"❌ Could not read file '{file_path}': {e}")
-        continue
+        continue    
 
     for idx, row in df.iterrows():
         subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
@@ -174,13 +185,13 @@ if all_errors:
     df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "__suffix_sort__", "Error"])
     df_errors = df_errors.drop(columns=["__priority__", "__suffix_sort__"])
 
-    output_file = "MD/BostonChildrens/validation/BCH.txt"
+    output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.txt"
     with open(output_file, "w", encoding="utf-8") as f:
         for _, row in df_errors.iterrows():
             f.write(f"{row.to_dict()}\n")
     print(f"✓ Validation errors saved to {output_file}.")
 
-    output_xlsx = "MD/BostonChildrens/validation/BCH.xlsx"
+    output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
     df_errors.to_excel(output_xlsx, index=False)
     print(f"✓ Validation errors saved to {output_xlsx}.")
 else:
