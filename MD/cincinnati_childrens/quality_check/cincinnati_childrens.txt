@@ -63,3 +63,4 @@
 {'HONEST_BROKER_SUBJECT_ID': '3', 'Table': 'treatment', 'Variable': 'MEDICATION_NAME', 'Error': "Warning: Variable 'MEDICATION_NAME' is a 'String' DataType", 'Count': 10}
 {'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'treatment', 'Variable': 'MEDICATION_NAME', 'Error': "Warning: Variable 'MEDICATION_NAME' is a 'String' DataType", 'Count': 10}
 {'HONEST_BROKER_SUBJECT_ID': '5', 'Table': 'treatment', 'Variable': 'MEDICATION_NAME', 'Error': "Warning: Variable 'MEDICATION_NAME' is a 'String' DataType", 'Count': 10}
+{'HONEST_BROKER_SUBJECT_ID': '2', 'Table': 'treatment', 'Variable': 'MEDICATION_UNIT', 'Error': 'MEDICATION_UNIT must be empty when MEDICATION_DOSE is not provided', 'Count': 1}

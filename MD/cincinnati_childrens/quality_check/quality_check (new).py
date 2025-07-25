@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import os
 import re
+import yaml
 
 def trim_json(data):
     if isinstance(data, dict):
@@ -40,9 +41,47 @@ def is_valid_enum(value, permissible_values):
     permissible_norm = [normalize_str(pv) for pv in permissible_values]
     return value_norm in permissible_norm
 
-def extract_suffix_number(error_msg):
-    match = re.search(r"BCH-(\d+)", error_msg)
-    return int(match.group(1)) if match else float('inf')
+def evaluate_condition(value, operator):
+    if operator == "null":
+        return pd.isna(value) or str(value).strip().lower() in ["", "nan"]
+    elif operator == "not_null":
+        return not (pd.isna(value) or str(value).strip().lower() in ["", "nan"])
+    else:
+        raise ValueError(f"Unsupported operator: {operator}")
+
+def apply_custom_yaml_rules(df, table_name, rules, file_errors):
+    if table_name not in rules:
+        return
+
+    for idx, row in df.iterrows():
+        subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
+
+        for rule in rules[table_name]:
+            if_cond = rule.get("if", {})
+            then_cond = rule.get("then", {})
+            description = rule.get("description", "Custom rule failed")
+
+            if_field = if_cond.get("field")
+            if_op = if_cond.get("operator")
+            then_field = then_cond.get("field")
+            then_op = then_cond.get("operator")
+
+            # Skip rule if operator missing, or raise an error with info
+            if if_op is None or then_op is None:
+                print(f"Warning: Skipping rule due to missing operator in table '{table_name}': {rule}")
+                continue
+
+            if_val = row.get(if_field)
+            then_val = row.get(then_field)
+
+            if evaluate_condition(if_val, if_op) and not evaluate_condition(then_val, then_op):
+                file_errors.append({
+                    "HONEST_BROKER_SUBJECT_ID": subject_id,
+                    "Table": table_name,
+                    "Variable": then_field,
+                    "Error": description
+                })
+
 
 # Load and trim the JSON data dictionary
 with open("MD/md_v1.2.json", "r") as f:
@@ -50,7 +89,11 @@ with open("MD/md_v1.2.json", "r") as f:
 
 data_dict = trim_json(data_dict)
 
-# Flatten dictionary
+# Load custom YAML rules
+with open("MD/cincinnati_childrens/quality_check/rules.yaml", "r") as f:
+    custom_rules = yaml.safe_load(f)
+
+# Flatten dictionary for easy lookup
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():
@@ -62,7 +105,7 @@ for domain_group_name, domain_group in data_dict.get("domains", {}).items():
             var_info["__original_var_name__"] = var_name.strip()
             variables[key] = var_info
 
-# File inputs
+# List of Excel files to validate
 excel_files = [
     "biometrics.xlsx", "demographics.xlsx", "disease_characteristics.xlsx",
     "family_medical_history.xlsx", "genetic_analysis.xlsx", "medical_history.xlsx", "subject_characteristics.xlsx",
@@ -81,7 +124,7 @@ for file in excel_files:
     try:
         df = pd.read_excel(file_path, dtype=str)
 
-    # Clean HONEST_BROKER_SUBJECT_ID values
+        # Clean HONEST_BROKER_SUBJECT_ID values
         if "HONEST_BROKER_SUBJECT_ID" in df.columns:
             df["HONEST_BROKER_SUBJECT_ID"] = (
                 df["HONEST_BROKER_SUBJECT_ID"]
@@ -94,6 +137,7 @@ for file in excel_files:
         print(f"❌ Could not read file '{file_path}': {e}")
         continue    
 
+    # Standard validation checks
     for idx, row in df.iterrows():
         subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
 
@@ -157,11 +201,14 @@ for file in excel_files:
                     "Error": f"Invalid PermissibleValue '{value_str}'"
                 })
 
+    # Apply additional custom YAML rules for this table
+    apply_custom_yaml_rules(df, table_name, custom_rules, file_errors)
+
     if file_errors:
         all_errors.extend(file_errors)
         files_with_errors.add(file)
 
-# ✅ Files without errors
+# Files with no errors
 files_with_no_errors = set(excel_files) - files_with_errors
 if files_with_no_errors:
     print(f"✓ No validation errors found for files: {', '.join(sorted(files_with_no_errors))}")
@@ -179,21 +226,18 @@ if all_errors:
 
     df_errors["Count"] = df_errors.groupby(["Table", "Variable", "Error"])["Error"].transform("count")
     df_errors["__priority__"] = df_errors["Error"].apply(lambda x: 0 if "Expected one of:" in x else 1)
-    df_errors["__suffix_sort__"] = df_errors["Error"].apply(extract_suffix_number)
 
     df_errors = df_errors.drop_duplicates(subset=["HONEST_BROKER_SUBJECT_ID", "Table", "Variable", "Error"])
-    df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "__suffix_sort__", "Error"])
-    df_errors = df_errors.drop(columns=["__priority__", "__suffix_sort__"])
+    df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "Error"])
 
-    output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.txt"
+    output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens2.txt"
     with open(output_file, "w", encoding="utf-8") as f:
         for _, row in df_errors.iterrows():
             f.write(f"{row.to_dict()}\n")
     print(f"✓ Validation errors saved to {output_file}.")
 
-    output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
-    df_errors.to_excel(output_xlsx, index=False)
-    print(f"✓ Validation errors saved to {output_xlsx}.")
-else:
-    print("✓ No validation errors found in any files.")
-
+#     output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
+#     df_errors.to_excel(output_xlsx, index=False)
+#     print(f"✓ Validation errors saved to {output_xlsx}.")
+# else:
+#     print("✓ No validation errors found in any files.")

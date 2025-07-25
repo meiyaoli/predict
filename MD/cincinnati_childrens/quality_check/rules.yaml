@@ -1,0 +1,18 @@
+treatment:
+  - if:
+      field: MEDICATION_DOSE
+      operator: "not_null"
+    then:
+      field: MEDICATION_UNIT
+      operator: "not_null"
+    description: If a medication dose is given, the unit for that dose must also be provided.
+
+
+  - if:
+      field: MEDICATION_DOSE
+      operator: "null"
+    then:
+      field: MEDICATION_UNIT
+      operator: "null"
+    description: If no medication dose is entered, then the unit for the dose should also be left blank.
+
