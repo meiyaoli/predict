@@ -1,3 +1,224 @@
+subject_characteristics:
+  - if:
+      field: AGE_LAST_CONTACT
+      operator: "not_null"
+    then: 
+      field: AGE_LAST_CONTACT_UNIT
+      operator: "not_null"
+    description: Missing the age_last_unit.
+  - if:
+      field: AGE_LAST_CONTACT
+      operator: "null"
+    then: 
+      field: AGE_LAST_CONTACT_UNIT
+      operator: "null"
+    description: Provide age_last_contact or omit row.
+#====================================================================================================#
+
+timing:
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide age_at or omit row.
+
+#====================================================================================================#
+
+family_medical_history:
+  - if: 
+      field: RELATION
+      operator: "not_null"
+    then:
+      field: CONDITION
+      operator: "not_null"
+    description: Missing condition for relation.
+  - if: 
+      field: RELATION
+      operator: "null"
+    then:
+      field: CONDITION
+      operator: "null"
+    description: Provide relation or omit row.         ##need to confirm
+
+#====================================================================================================#
+
+medical_history:
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide age_at or omit row.
+
+#====================================================================================================#
+
+biometrics:
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide age_at or omit row.
+
+  - if:
+      field: MEASUREMENT_TYPE
+      operator: "not_null"
+    then:
+      field: MEASUREMENT_NUMERIC
+      operator: "not_null"
+    description: Missing the measurement_numeric.
+
+  - if:
+      field: MEASUREMENT_TYPE
+      operator: "not_null"
+    then:
+      field: MEASUREMENT_UNIT
+      operator: "not_null"
+    description: Missing the measurement_unit.
+
+  - if:
+      field: MEASUREMENT_TYPE
+      operator: "null"
+    then:
+      field: MEASUREMENT_NUMERIC
+      operator: "null"
+    description: Provide measurement_type or omit row.
+
+  - if:
+      field: MEASUREMENT_TYPE
+      operator: "null"
+    then:
+      field: MEASUREMENT_UNIT
+      operator: "null"
+    description: Provide measurement_type or omit row.
+
+#====================================================================================================#
+
+genetic_analysis:
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide the age_at or omit row.
+
+  - if:
+      field: EXTERNAL_REF_ID
+      operator: "not_null"
+    then:
+      field: EXTERNAL_REF_ID_SYSTEM
+      operator: "not_null"
+    description: Missing the external_ref_id_system.
+  - if:
+      field: EXTERNAL_REF_ID
+      operator: "null"
+    then:
+      field: EXTERNAL_REF_ID_SYSTEM
+      operator: "null"
+    description: Provide the external_ref_id or omit row.
+
+
+#====================================================================================================#
+
+disease_characteristics:
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide the age_at or omit row.
+
+#====================================================================================================#
+
+testing:
+  - if: 
+      field: RESULT_NUMERIC
+      operator: "not_null"
+    then:
+      field: RESULT_UNIT
+      operator: "not_null"
+    description: Missing the result_unit.
+  - if:
+      field: RESULT_NUMERIC
+      operator: "null"
+    then:
+      field: RESULT_UNIT
+      operator: "null"
+    description: Provide the result_numeric or omit row.
+
+  - if: 
+      field: POST_GLUCOSE_TIMEPOINT
+      operator: "not_null"
+    then:
+      field: POST_GLUCOSE_TIMEPOINT_UNIT
+      operator: "not_null"
+    description: Missing the post_glucose_timepoint_unit.
+  - if:
+      field: POST_GLUCOSE_TIMEPOINT
+      operator: "null"
+    then:
+      field: POST_GLUCOSE_TIMEPOINT_UNIT
+      operator: "null"
+    description: Provide the post_glucose_timepoint or omit row.
+
+  - if: 
+      field: AGE_AT
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT
+      operator: "null"
+    then: 
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide the age_at or omit row.
+
+#====================================================================================================#
+
 treatment:
   - if:
       field: MEDICATION_DOSE
@@ -5,14 +226,29 @@ treatment:
     then:
       field: MEDICATION_UNIT
       operator: "not_null"
-    description: If a medication dose is given, the unit for that dose must also be provided.
-
-
+    description: Missing the medication_unit.
   - if:
       field: MEDICATION_DOSE
       operator: "null"
     then:
       field: MEDICATION_UNIT
       operator: "null"
-    description: If no medication dose is entered, then the unit for the dose should also be left blank.
+    description: Provide the medication_dose or omit row.
+
+  - if:
+      field: AGE_AT_START
+      operator: "not_null"
+    then: 
+      field: AGE_UNIT
+      operator: "not_null"
+    description: Missing the age_unit.
+  - if:
+      field: AGE_AT_START
+      operator: "null"
+    then:
+      field: AGE_UNIT
+      operator: "null"
+    description: Provide the age_at_start or omit row.
+
+
 

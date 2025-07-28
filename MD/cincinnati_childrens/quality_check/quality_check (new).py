@@ -83,14 +83,12 @@ def apply_custom_yaml_rules(df, table_name, rules, file_errors):
                 })
 
 
-# Load and trim the JSON data dictionary
 with open("MD/md_v1.2.json", "r") as f:
     data_dict = json.load(f)
 
 data_dict = trim_json(data_dict)
 
-# Load custom YAML rules
-with open("MD/cincinnati_childrens/quality_check/rules.yaml", "r") as f:
+with open("MD/cincinnati_childrens/quality_check/conditional_statement.yaml", "r") as f:
     custom_rules = yaml.safe_load(f)
 
 # Flatten dictionary for easy lookup
@@ -105,7 +103,6 @@ for domain_group_name, domain_group in data_dict.get("domains", {}).items():
             var_info["__original_var_name__"] = var_name.strip()
             variables[key] = var_info
 
-# List of Excel files to validate
 excel_files = [
     "biometrics.xlsx", "demographics.xlsx", "disease_characteristics.xlsx",
     "family_medical_history.xlsx", "genetic_analysis.xlsx", "medical_history.xlsx", "subject_characteristics.xlsx",
@@ -215,7 +212,6 @@ if files_with_no_errors:
 else:
     print("✓ All files had validation errors.")
 
-# Save and count unique errors
 if all_errors:
     df_errors = pd.DataFrame(all_errors)
 
