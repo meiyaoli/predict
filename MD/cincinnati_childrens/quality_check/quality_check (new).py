@@ -91,7 +91,6 @@ data_dict = trim_json(data_dict)
 with open("MD/cincinnati_childrens/quality_check/conditional_statement.yaml", "r") as f:
     custom_rules = yaml.safe_load(f)
 
-# Flatten dictionary for easy lookup
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():
@@ -121,7 +120,6 @@ for file in excel_files:
     try:
         df = pd.read_excel(file_path, dtype=str)
 
-        # Clean HONEST_BROKER_SUBJECT_ID values
         if "HONEST_BROKER_SUBJECT_ID" in df.columns:
             df["HONEST_BROKER_SUBJECT_ID"] = (
                 df["HONEST_BROKER_SUBJECT_ID"]
@@ -134,7 +132,6 @@ for file in excel_files:
         print(f"❌ Could not read file '{file_path}': {e}")
         continue    
 
-    # Standard validation checks
     for idx, row in df.iterrows():
         subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
 
@@ -156,13 +153,13 @@ for file in excel_files:
                         "HONEST_BROKER_SUBJECT_ID": subject_id,
                         "Table": table_name,
                         "Variable": col,
-                        "Error": f"Invalid Variable '{col}' with invalid PermissibleValue '{value_str}'"
+                        "Error": f"Invalid Variable: '{col}' with invalid PermissibleValue: '{value_str}'"
                     },
                     {
                         "HONEST_BROKER_SUBJECT_ID": subject_id,
                         "Table": table_name,
                         "Variable": col,
-                        "Error": f"Invalid Variable '{col}'. Expected one of: {', '.join(expected_vars)}"
+                        "Error": f"Invalid Variable: '{col}'. Expecting: {', '.join(expected_vars)}"
                     }
                 ])
                 continue
@@ -178,34 +175,32 @@ for file in excel_files:
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": col,
-                    "Error": f"Invalid DataType '{value_str}' (expected {var_type})"
+                    "Error": f"Invalid DataType: '{value_str}'. Expecting {var_type}"
                 })
                 continue
 
-            if var_type == "String" and col_key != "honest_broker_subject_id":
-                file_errors.append({
-                    "HONEST_BROKER_SUBJECT_ID": subject_id,
-                    "Table": table_name,
-                    "Variable": col,
-                    "Error": f"Warning: Variable '{col}' is a 'String' DataType"
-                })
+            # if var_type == "String" and col_key != "honest_broker_subject_id":
+            #     file_errors.append({
+            #         "HONEST_BROKER_SUBJECT_ID": subject_id,
+            #         "Table": table_name,
+            #         "Variable": col,
+            #         "Error": f"Warning: Variable '{col}' is a 'String' DataType"
+            #     })
 
             if var_type == "Enum" and not is_valid_enum(value_str, permissible_values):
                 file_errors.append({
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": col,
-                    "Error": f"Invalid PermissibleValue '{value_str}'"
+                    "Error": f"Invalid PermissibleValue: '{value_str}'"
                 })
 
-    # Apply additional custom YAML rules for this table
     apply_custom_yaml_rules(df, table_name, custom_rules, file_errors)
 
     if file_errors:
         all_errors.extend(file_errors)
         files_with_errors.add(file)
 
-# Files with no errors
 files_with_no_errors = set(excel_files) - files_with_errors
 if files_with_no_errors:
     print(f"✓ No validation errors found for files: {', '.join(sorted(files_with_no_errors))}")
@@ -219,21 +214,19 @@ if all_errors:
     df_errors["Table"] = df_errors["Table"].astype(str).str.strip().str.lower()
     df_errors["Variable"] = df_errors["Variable"].astype(str).str.strip().str.upper()
     df_errors["Error"] = df_errors["Error"].astype(str).str.strip()
-
-    df_errors["Count"] = df_errors.groupby(["Table", "Variable", "Error"])["Error"].transform("count")
-    df_errors["__priority__"] = df_errors["Error"].apply(lambda x: 0 if "Expected one of:" in x else 1)
+    df_errors["Total Error Count"] = df_errors.groupby(["Table", "Variable", "Error"])["Error"].transform("count")
 
     df_errors = df_errors.drop_duplicates(subset=["HONEST_BROKER_SUBJECT_ID", "Table", "Variable", "Error"])
-    df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "Error"])
+    df_errors = df_errors.sort_values(by=["Table", "Variable", "Error"])
 
-    output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens2.txt"
-    with open(output_file, "w", encoding="utf-8") as f:
-        for _, row in df_errors.iterrows():
-            f.write(f"{row.to_dict()}\n")
-    print(f"✓ Validation errors saved to {output_file}.")
+    # output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.txt"
+    # with open(output_file, "w", encoding="utf-8") as f:
+    #     for _, row in df_errors.iterrows():
+    #         f.write(f"{row.to_dict()}\n")
+    # print(f"✓ Validation errors saved to {output_file}.")
 
-#     output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
-#     df_errors.to_excel(output_xlsx, index=False)
-#     print(f"✓ Validation errors saved to {output_xlsx}.")
-# else:
-#     print("✓ No validation errors found in any files.")
+    output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
+    df_errors.to_excel(output_xlsx, index=False)
+    print(f"✓ Validation errors saved to {output_xlsx}.")
+else:
+    print("✓ No validation errors found in any files.")
