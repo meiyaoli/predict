@@ -40,14 +40,14 @@ family_medical_history:
     then:
       field: CONDITION
       operator: "not_null"
-    description: Missing condition for relation.
+    description: Missing the condition for "{RELATION}".
   - if: 
       field: RELATION
       operator: "null"
     then:
       field: CONDITION
       operator: "null"
-    description: Provide relation or omit row.         ##need to confirm
+    description: Provide relation or omit row.         ## need to confirm
 
 #====================================================================================================#
 
@@ -91,7 +91,7 @@ biometrics:
     then:
       field: MEASUREMENT_NUMERIC
       operator: "not_null"
-    description: Missing the measurement_numeric.
+    description: Missing the measurement_numeric for the "{MEASUREMENT_TYPE}".
 
   - if:
       field: MEASUREMENT_TYPE
@@ -99,7 +99,7 @@ biometrics:
     then:
       field: MEASUREMENT_UNIT
       operator: "not_null"
-    description: Missing the measurement_unit.
+    description: Missing the measurement_unit for the "{MEASUREMENT_TYPE}".
 
   - if:
       field: MEASUREMENT_TYPE
@@ -115,7 +115,7 @@ biometrics:
     then:
       field: MEASUREMENT_UNIT
       operator: "null"
-    description: Provide measurement_type or omit row.
+    description: Provide measurement_type and measurement_numeric or omit row.
 
 #====================================================================================================#
 
@@ -178,7 +178,7 @@ testing:
     then:
       field: RESULT_UNIT
       operator: "not_null"
-    description: Missing the result_unit.
+    description: Missing the result_unit for the test_type "{TEST_TYPE}".
   - if:
       field: RESULT_NUMERIC
       operator: "null"
@@ -226,14 +226,14 @@ treatment:
     then:
       field: MEDICATION_UNIT
       operator: "not_null"
-    description: Missing the medication_unit.
+    description: Missing the medication_unit for the medication "{MEDICATION_NAME}".
   - if:
       field: MEDICATION_DOSE
       operator: "null"
     then:
       field: MEDICATION_UNIT
       operator: "null"
-    description: Provide the medication_dose or omit row.
+    description: Provide the medication_dose for "{MEDICATION_NAME}" or omit row.
 
   - if:
       field: AGE_AT_START

@@ -56,7 +56,7 @@ def apply_custom_yaml_rules(df, table_name, rules, file_errors):
         for rule in rules[table_name]:
             if_cond = rule.get("if", {})
             then_cond = rule.get("then", {})
-            description = rule.get("description", "Custom rule failed")
+            description_template = rule.get("description", "Custom rule failed")
 
             if_field = if_cond.get("field")
             if_op = if_cond.get("operator")
@@ -72,6 +72,13 @@ def apply_custom_yaml_rules(df, table_name, rules, file_errors):
             then_val = row.get(then_field)
 
             if evaluate_condition(if_val, if_op) and not evaluate_condition(then_val, then_op):
+                try:
+                    description = description_template.format(**row)
+                except KeyError as e:
+                    missing_key = str(e).strip("'")
+                    fallback = row.get(missing_key, "<missing>")
+                    description = description_template.replace(f"{{{missing_key}}}", str(fallback))
+
                 file_errors.append({
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
@@ -202,9 +209,7 @@ for file in excel_files:
 
 files_with_no_errors = set(excel_files) - files_with_errors
 if files_with_no_errors:
-    print(f"✓ No validation errors found for files: {', '.join(sorted(files_with_no_errors))}")
-else:
-    print("✓ All files had validation errors.")
+    print(f"✓ No QC errors found for files: {', '.join(sorted(files_with_no_errors))}")
 
 if all_errors:
     df_errors = pd.DataFrame(all_errors)
@@ -221,15 +226,15 @@ if all_errors:
     df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "__suffix_sort__", "Error"])
     df_errors = df_errors.drop(columns=["__priority__", "__suffix_sort__"])
 
-    output_file = "MD/boston_childrens/quality_check/BCH2.txt"
-    with open(output_file, "w", encoding="utf-8") as f:
-        for _, row in df_errors.iterrows():
-            f.write(f"{row.to_dict()}\n")
-    print(f"✓ Validation errors saved to {output_file}.")
+    # output_file = "MD/boston_childrens/quality_check/qc_boston_childrens.txt"
+    # with open(output_file, "w", encoding="utf-8") as f:
+    #     for _, row in df_errors.iterrows():
+    #         f.write(f"{row.to_dict()}\n")
+    # print(f"✓ QC errors saved to {output_file}.")
 
-#     output_xlsx = "MD/boston_childrens/quality_check/BCH.xlsx"
-#     df_errors.to_excel(output_xlsx, index=False)
-#     print(f"✓ Validation errors saved to {output_xlsx}.")
-# else:
-#     print("✓ No validation errors found in any files.")
+    output_xlsx = "MD/boston_childrens/quality_check/qc_boston_childrens.xlsx"
+    df_errors.to_excel(output_xlsx, index=False)
+    print(f"✓ QC errors saved to {output_xlsx}.")
+else:
+    print("✓ No QC errors found in any files.")
 

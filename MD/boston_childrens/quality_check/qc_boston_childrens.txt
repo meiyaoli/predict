@@ -1,7 +1,8 @@
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_TYPE', 'Error': "Invalid PermissibleValue: 'BMI Z-score Value'", 'Total Error Count': 552}
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_TYPE', 'Error': "Invalid PermissibleValue: 'BMI Z-score percentile'", 'Total Error Count': 552}
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_TYPE', 'Error': "Invalid PermissibleValue: 'Height'", 'Total Error Count': 582}
-{'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_UNIT', 'Error': 'ConditionalStatement Error: Missing the measurement_unit.', 'Total Error Count': 1104}
+{'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_UNIT', 'Error': 'ConditionalStatement Error: Missing the measurement_unit for the "BMI Z-score Value".', 'Total Error Count': 552}
+{'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_UNIT', 'Error': 'ConditionalStatement Error: Missing the measurement_unit for the "BMI Z-score percentile".', 'Total Error Count': 552}
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'MEASUREMENT_UNIT', 'Error': "Invalid PermissibleValue: 'kg/m2'", 'Total Error Count': 552}
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'PREDICT_SUBJECT_ID', 'Error': "Invalid Variable: 'PREDICT_SUBJECT_ID' with invalid PermissibleValue: 'BCH-1'", 'Total Error Count': 275}
 {'HONEST_BROKER_SUBJECT_ID': '<missing>', 'Table': 'biometrics', 'Variable': 'PREDICT_SUBJECT_ID', 'Error': "Invalid Variable: 'PREDICT_SUBJECT_ID' with invalid PermissibleValue: 'BCH-2'", 'Total Error Count': 268}

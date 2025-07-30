@@ -13,8 +13,13 @@
 {'HONEST_BROKER_SUBJECT_ID': '3', 'Table': 'subject_characteristics', 'Variable': 'DATA_CONTRIBUTOR_ID', 'Error': "Invalid PermissibleValue: 'Cincinnati Children's'", 'Total Error Count': 5}
 {'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'subject_characteristics', 'Variable': 'DATA_CONTRIBUTOR_ID', 'Error': "Invalid PermissibleValue: 'Cincinnati Children's'", 'Total Error Count': 5}
 {'HONEST_BROKER_SUBJECT_ID': '5', 'Table': 'subject_characteristics', 'Variable': 'DATA_CONTRIBUTOR_ID', 'Error': "Invalid PermissibleValue: 'Cincinnati Children's'", 'Total Error Count': 5}
-{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit.', 'Total Error Count': 8}
-{'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit.', 'Total Error Count': 8}
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies GAD65".', 'Total Error Count': 2}
+{'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies GAD65".', 'Total Error Count': 2}
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies IA-2".', 'Total Error Count': 3}
+{'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies IA-2".', 'Total Error Count': 3}
+{'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies Insulin".', 'Total Error Count': 2}
+{'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies Insulin".', 'Total Error Count': 2}
+{'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'RESULT_UNIT', 'Error': 'ConditionalStatement Error: Missing the result_unit for the test_type "Autoantibodies ZnT8".', 'Total Error Count': 1}
 {'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'testing', 'Variable': 'TEST_TYPE', 'Error': "Invalid PermissibleValue: 'Autoantibodies GAD65'", 'Total Error Count': 3}
 {'HONEST_BROKER_SUBJECT_ID': '2', 'Table': 'testing', 'Variable': 'TEST_TYPE', 'Error': "Invalid PermissibleValue: 'Autoantibodies GAD65'", 'Total Error Count': 3}
 {'HONEST_BROKER_SUBJECT_ID': '4', 'Table': 'testing', 'Variable': 'TEST_TYPE', 'Error': "Invalid PermissibleValue: 'Autoantibodies GAD65'", 'Total Error Count': 3}
@@ -37,4 +42,4 @@
 {'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'treatment', 'Variable': 'MEDICATION_DOSE', 'Error': "Invalid DataType: '10 units in the morning and 5 units in the evening'. Expecting: Decimal", 'Total Error Count': 1}
 {'HONEST_BROKER_SUBJECT_ID': '5', 'Table': 'treatment', 'Variable': 'MEDICATION_DOSE', 'Error': "Invalid DataType: '15 units of NPH and 5 units of regular insulin'. Expecting: Decimal", 'Total Error Count': 1}
 {'HONEST_BROKER_SUBJECT_ID': '1', 'Table': 'treatment', 'Variable': 'MEDICATION_DOSE', 'Error': "Invalid DataType: 'correction factor 1:50 > 120'. Expecting: Decimal", 'Total Error Count': 1}
-{'HONEST_BROKER_SUBJECT_ID': '2', 'Table': 'treatment', 'Variable': 'MEDICATION_UNIT', 'Error': 'ConditionalStatement Error: Provide the medication_dose or omit row.', 'Total Error Count': 1}
+{'HONEST_BROKER_SUBJECT_ID': '2', 'Table': 'treatment', 'Variable': 'MEDICATION_UNIT', 'Error': 'ConditionalStatement Error: Provide the medication_dose for "Lantus" or omit row.', 'Total Error Count': 1}
