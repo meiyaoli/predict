@@ -1,7 +1,5 @@
-import json
+import json, os, re, yaml
 import pandas as pd
-import os
-import re
 
 def trim_json(data):
     if isinstance(data, dict):
@@ -40,17 +38,59 @@ def is_valid_enum(value, permissible_values):
     permissible_norm = [normalize_str(pv) for pv in permissible_values]
     return value_norm in permissible_norm
 
+def evaluate_condition(value, operator):
+    if operator == "null":
+        return pd.isna(value) or str(value).strip().lower() in ["", "nan"]
+    elif operator == "not_null":
+        return not (pd.isna(value) or str(value).strip().lower() in ["", "nan"])
+    else:
+        raise ValueError(f"Unsupported operator: {operator}")
+
+def apply_custom_yaml_rules(df, table_name, rules, file_errors):
+    if table_name not in rules:
+        return
+
+    for idx, row in df.iterrows():
+        subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
+
+        for rule in rules[table_name]:
+            if_cond = rule.get("if", {})
+            then_cond = rule.get("then", {})
+            description = rule.get("description", "Custom rule failed")
+
+            if_field = if_cond.get("field")
+            if_op = if_cond.get("operator")
+            then_field = then_cond.get("field")
+            then_op = then_cond.get("operator")
+
+            # Skip rule if operator missing, or raise an error with info
+            if if_op is None or then_op is None:
+                print(f"Warning: Skipping rule due to missing operator in table '{table_name}': {rule}")
+                continue
+
+            if_val = row.get(if_field)
+            then_val = row.get(then_field)
+
+            if evaluate_condition(if_val, if_op) and not evaluate_condition(then_val, then_op):
+                file_errors.append({
+                    "HONEST_BROKER_SUBJECT_ID": subject_id,
+                    "Table": table_name,
+                    "Variable": then_field,
+                    "Error": f"ConditionalStatement Error: {description}"
+                })
+
 def extract_suffix_number(error_msg):
     match = re.search(r"BCH-(\d+)", error_msg)
     return int(match.group(1)) if match else float('inf')
 
-# Load and trim the JSON data dictionary
 with open("MD/md_v1.0.json", "r") as f:
     data_dict = json.load(f)
 
 data_dict = trim_json(data_dict)
 
-# Flatten dictionary
+with open("MD/conditional_statement.yaml", "r") as f:
+    custom_rules = yaml.safe_load(f)
+
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():
@@ -62,13 +102,12 @@ for domain_group_name, domain_group in data_dict.get("domains", {}).items():
             var_info["__original_var_name__"] = var_name.strip()
             variables[key] = var_info
 
-# File inputs
 excel_files = [
     "biometrics.xlsx", "demographics.xlsx", "disease_characteristics.xlsx",
     "family_medical_history.xlsx", "genetic_analysis.xlsx", "testing.xlsx", "treatment.xlsx"
 ]
 
-input_dir = "MD/BostonChildrens/raw"
+input_dir = "MD/boston_childrens/raw"
 all_errors = []
 files_with_errors = set()
 
@@ -78,10 +117,19 @@ for file in excel_files:
     file_errors = []
 
     try:
-        df = pd.read_excel(file_path)
+        df = pd.read_excel(file_path, dtype=str)
+
+        if "HONEST_BROKER_SUBJECT_ID" in df.columns:
+            df["HONEST_BROKER_SUBJECT_ID"] = (
+                df["HONEST_BROKER_SUBJECT_ID"]
+                .fillna("")
+                .astype(str)
+                .str.strip()
+                .str.replace(r"\.0$", "", regex=True)
+            )
     except Exception as e:
         print(f"❌ Could not read file '{file_path}': {e}")
-        continue
+        continue   
 
     for idx, row in df.iterrows():
         subject_id = str(row.get("HONEST_BROKER_SUBJECT_ID", "<missing>")).strip()
@@ -104,13 +152,13 @@ for file in excel_files:
                         "HONEST_BROKER_SUBJECT_ID": subject_id,
                         "Table": table_name,
                         "Variable": col,
-                        "Error": f"Invalid Variable '{col}' with invalid PermissibleValue '{value_str}'"
+                        "Error": f"Invalid Variable: '{col}' with invalid PermissibleValue: '{value_str}'"
                     },
                     {
                         "HONEST_BROKER_SUBJECT_ID": subject_id,
                         "Table": table_name,
                         "Variable": col,
-                        "Error": f"Invalid Variable '{col}'. Expected one of: {', '.join(expected_vars)}"
+                        "Error": f"Invalid Variable: '{col}'. Expecting: {', '.join(expected_vars)}"
                     }
                 ])
                 continue
@@ -126,38 +174,38 @@ for file in excel_files:
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": col,
-                    "Error": f"Invalid DataType '{value_str}' (expected {var_type})"
+                    "Error": f"Invalid DataType: '{value_str}'. Expecting: {var_type}"
                 })
                 continue
 
-            if var_type == "String" and col_key != "honest_broker_subject_id":
-                file_errors.append({
-                    "HONEST_BROKER_SUBJECT_ID": subject_id,
-                    "Table": table_name,
-                    "Variable": col,
-                    "Error": f"Warning: Variable '{col}' is a 'String' DataType"
-                })
+            # if var_type == "String" and col_key != "honest_broker_subject_id":
+            #     file_errors.append({
+            #         "HONEST_BROKER_SUBJECT_ID": subject_id,
+            #         "Table": table_name,
+            #         "Variable": col,
+            #         "Error": f"Warning: Variable '{col}' is a 'String' DataType"
+            #     })
 
             if var_type == "Enum" and not is_valid_enum(value_str, permissible_values):
                 file_errors.append({
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": col,
-                    "Error": f"Invalid PermissibleValue '{value_str}'"
+                    "Error": f"Invalid PermissibleValue: '{value_str}'"
                 })
+
+    apply_custom_yaml_rules(df, table_name, custom_rules, file_errors)
 
     if file_errors:
         all_errors.extend(file_errors)
         files_with_errors.add(file)
 
-# ✅ Files without errors
 files_with_no_errors = set(excel_files) - files_with_errors
 if files_with_no_errors:
     print(f"✓ No validation errors found for files: {', '.join(sorted(files_with_no_errors))}")
 else:
     print("✓ All files had validation errors.")
 
-# Save and count unique errors
 if all_errors:
     df_errors = pd.DataFrame(all_errors)
 
@@ -165,8 +213,7 @@ if all_errors:
     df_errors["Table"] = df_errors["Table"].astype(str).str.strip().str.lower()
     df_errors["Variable"] = df_errors["Variable"].astype(str).str.strip().str.upper()
     df_errors["Error"] = df_errors["Error"].astype(str).str.strip()
-
-    df_errors["Count"] = df_errors.groupby(["Table", "Variable", "Error"])["Error"].transform("count")
+    df_errors["Total Error Count"] = df_errors.groupby(["Table", "Variable", "Error"])["Error"].transform("count")
     df_errors["__priority__"] = df_errors["Error"].apply(lambda x: 0 if "Expected one of:" in x else 1)
     df_errors["__suffix_sort__"] = df_errors["Error"].apply(extract_suffix_number)
 
@@ -174,15 +221,15 @@ if all_errors:
     df_errors = df_errors.sort_values(by=["Table", "Variable", "__priority__", "__suffix_sort__", "Error"])
     df_errors = df_errors.drop(columns=["__priority__", "__suffix_sort__"])
 
-    output_file = "MD/BostonChildrens/validation/BCH.txt"
+    output_file = "MD/boston_childrens/quality_check/BCH2.txt"
     with open(output_file, "w", encoding="utf-8") as f:
         for _, row in df_errors.iterrows():
             f.write(f"{row.to_dict()}\n")
     print(f"✓ Validation errors saved to {output_file}.")
 
-    output_xlsx = "MD/BostonChildrens/validation/BCH.xlsx"
-    df_errors.to_excel(output_xlsx, index=False)
-    print(f"✓ Validation errors saved to {output_xlsx}.")
-else:
-    print("✓ No validation errors found in any files.")
+#     output_xlsx = "MD/boston_childrens/quality_check/BCH.xlsx"
+#     df_errors.to_excel(output_xlsx, index=False)
+#     print(f"✓ Validation errors saved to {output_xlsx}.")
+# else:
+#     print("✓ No validation errors found in any files.")
 

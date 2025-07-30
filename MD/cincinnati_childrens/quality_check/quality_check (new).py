@@ -79,7 +79,7 @@ def apply_custom_yaml_rules(df, table_name, rules, file_errors):
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": then_field,
-                    "Error": description
+                    "Error": f"ConditionalStatement Error: {description}"
                 })
 
 
@@ -175,7 +175,7 @@ for file in excel_files:
                     "HONEST_BROKER_SUBJECT_ID": subject_id,
                     "Table": table_name,
                     "Variable": col,
-                    "Error": f"Invalid DataType: '{value_str}'. Expecting {var_type}"
+                    "Error": f"Invalid DataType: '{value_str}'. Expecting: {var_type}"
                 })
                 continue
 
@@ -219,14 +219,14 @@ if all_errors:
     df_errors = df_errors.drop_duplicates(subset=["HONEST_BROKER_SUBJECT_ID", "Table", "Variable", "Error"])
     df_errors = df_errors.sort_values(by=["Table", "Variable", "Error"])
 
-    # output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.txt"
-    # with open(output_file, "w", encoding="utf-8") as f:
-    #     for _, row in df_errors.iterrows():
-    #         f.write(f"{row.to_dict()}\n")
-    # print(f"✓ Validation errors saved to {output_file}.")
+    output_file = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.txt"
+    with open(output_file, "w", encoding="utf-8") as f:
+        for _, row in df_errors.iterrows():
+            f.write(f"{row.to_dict()}\n")
+    print(f"✓ Validation errors saved to {output_file}.")
 
-    output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
-    df_errors.to_excel(output_xlsx, index=False)
-    print(f"✓ Validation errors saved to {output_xlsx}.")
-else:
-    print("✓ No validation errors found in any files.")
+#     output_xlsx = "MD/cincinnati_childrens/quality_check/cincinnati_childrens.xlsx"
+#     df_errors.to_excel(output_xlsx, index=False)
+#     print(f"✓ Validation errors saved to {output_xlsx}.")
+# else:
+#     print("✓ No validation errors found in any files.")
