@@ -2,6 +2,7 @@ import json
 import pandas as pd
 from collections import OrderedDict
 from datetime import datetime
+import os
 
 info_map = {
     "Title": "title",
@@ -15,7 +16,9 @@ info_map = {
     "Total Variables": "total"
 }
 
-df_raw = pd.read_csv("CNS/cns_v1.2.csv", header=None)
+csv_path = "CNS/cns_v1.2.csv"
+df_raw = pd.read_csv(csv_path, header=None)
+filename = os.path.splitext(os.path.basename(csv_path))[0] 
 
 info = {}
 for _, row in df_raw.iterrows():
@@ -108,7 +111,12 @@ class Value:
         }
 
 
-model = Model(name=info.get("name", "cns_v1.2"), sheet_id="", dg="cns_v1.2.csv", date=datetime.today().strftime("%Y%m%d"))
+model = Model(
+    name=info.get("name", filename),
+    sheet_id="",
+    dg=os.path.basename(csv_path),
+    date=datetime.today().strftime("%Y%m%d")
+)
 model.info.update(info)
 
 current_domain = None
@@ -139,4 +147,4 @@ for i, row in df.iterrows():
 with open("CNS/cns_v1.2.json", "w") as f:
     f.write(str(model))
 
-print("✅ 'cns_v1.2.json' is saved")
+print("✓ 'cns_v1.2.json' is saved")
