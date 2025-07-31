@@ -2,6 +2,7 @@ import json
 import pandas as pd
 from collections import OrderedDict
 from datetime import datetime
+import os
 
 info_map = {
     "Title": "title",
@@ -15,7 +16,9 @@ info_map = {
     "Total Variables": "total"
 }
 
-df_raw = pd.read_csv("_dictionaries/NPC/npc_v1.1.csv", header=None)
+csv_path = "NPC/npc_v1.1.csv"
+df_raw = pd.read_csv(csv_path, header=None)
+filename = os.path.splitext(os.path.basename(csv_path))[0]
 
 info = {}
 for _, row in df_raw.iterrows():
@@ -73,7 +76,7 @@ class Variable:
         self.tier = parse(m, row, 3, "Tier", i)
         self.desc = parse(m, row, 4, "VariableDescription", i)
         self.codes = list(filter(None, parse(m, row, 5, "VariableCode", i).split("|")))
-        self.inotes = parse(m, row, 9, "ImplementationNotes", i)
+        self.inotes = list(filter(None, parse(m, row, 9, "ImplementationNotes", i).split("|")))
         self.mappings = list(filter(None, parse(m, row, 10, "Mappings", i).split("|")))
         self.values = OrderedDict()
         self.coded = self.type in ("Enum", "Code")
@@ -96,7 +99,7 @@ class Value:
         self.name = parse(m, row, 6, "PermissibleValue", i)
         self.desc = parse(m, row, 7, "ValueDescription", i)
         self.codes = list(filter(None, parse(m, row, 8, "ValueCode", i).split("|")))
-        self.inotes = parse(m, row, 9, "ImplementationNotes", i)
+        self.inotes = list(filter(None, parse(m, row, 9, "ImplementationNotes", i).split("|")))
         self.mappings = list(filter(None, parse(m, row, 10, "Mappings", i).split("|")))
 
     def __str__(self):
@@ -108,7 +111,12 @@ class Value:
         }
 
 
-model = Model(name=info.get("name", "npc_v1.1"), sheet_id="", dg="npc_v1.1.csv", date=datetime.today().strftime("%Y%m%d"))
+model = Model(
+    name=info.get("name", filename),
+    sheet_id="",
+    dg=os.path.basename(csv_path),
+    date=datetime.today().strftime("%Y%m%d")
+)
 model.info.update(info)
 
 current_domain = None
@@ -136,7 +144,7 @@ for i, row in df.iterrows():
         if key in model.variables:
             model.variables[key].values[Value(model, row, i).name] = Value(model, row, i)
 
-with open("_dictionaries/NPC/npc_v1.1.json", "w") as f:
+with open("NPC/npc_v1.1.json", "w") as f:
     f.write(str(model))
 
-print("✅ 'npc_v1.1.json' is saved")
+print("✓ 'npc_v1.1.json' is saved")

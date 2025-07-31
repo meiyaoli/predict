@@ -98,6 +98,8 @@ data_dict = trim_json(data_dict)
 with open("MD/conditional_statement.yaml", "r") as f:
     custom_rules = yaml.safe_load(f)
 
+dataset = "MD"
+
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():
