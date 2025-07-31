@@ -91,7 +91,7 @@ with open("MD/md_v1.2.json", "r") as f:
 
 data_dict = trim_json(data_dict)
 
-with open("MD/conditional_statement.yaml", "r") as f:
+with open("conditional_statement.yaml", "r") as f:
     custom_rules = yaml.safe_load(f)
 
 dataset = "MD"
