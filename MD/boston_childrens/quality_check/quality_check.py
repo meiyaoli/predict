@@ -100,6 +100,8 @@ with open("conditional_statement.yaml", "r") as f:
 
 dataset = "MD"
 
+custom_rules = custom_rules.get(dataset, {})
+
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():

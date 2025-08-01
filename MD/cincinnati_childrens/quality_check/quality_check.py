@@ -96,6 +96,8 @@ with open("conditional_statement.yaml", "r") as f:
 
 dataset = "MD"
 
+custom_rules = custom_rules.get(dataset, {})
+
 variables = {}
 for domain_group_name, domain_group in data_dict.get("domains", {}).items():
     for domain_name, domain in domain_group.items():
@@ -222,14 +224,14 @@ if all_errors:
     df_errors = df_errors.drop_duplicates(subset=["HONEST_BROKER_SUBJECT_ID", "Table", "Variable", "Error"])
     df_errors = df_errors.sort_values(by=["Table", "Variable", "Error"])
 
-    # output_file = "MD/cincinnati_childrens/quality_check/qc_cincinnati_childrens.txt"
-    # with open(output_file, "w", encoding="utf-8") as f:
-    #     for _, row in df_errors.iterrows():
-    #         f.write(f"{row.to_dict()}\n")
-    # print(f"✓ QC errors saved to {output_file}.")
+    output_file = "MD/cincinnati_childrens/quality_check/qc_cincinnati_childrens2.txt"
+    with open(output_file, "w", encoding="utf-8") as f:
+        for _, row in df_errors.iterrows():
+            f.write(f"{row.to_dict()}\n")
+    print(f"✓ QC errors saved to {output_file}.")
 
-    output_xlsx = "MD/cincinnati_childrens/quality_check/qc_cincinnati_childrens.xlsx"
-    df_errors.to_excel(output_xlsx, index=False)
-    print(f"✓ QC errors saved to {output_xlsx}.")
-else:
-    print("✓ No QC errors found in any files.")
+#     output_xlsx = "MD/cincinnati_childrens/quality_check/qc_cincinnati_childrens.xlsx"
+#     df_errors.to_excel(output_xlsx, index=False)
+#     print(f"✓ QC errors saved to {output_xlsx}.")
+# else:
+#     print("✓ No QC errors found in any files.")
