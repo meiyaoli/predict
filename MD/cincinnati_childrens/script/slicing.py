@@ -11,7 +11,6 @@ os.makedirs(output_dir, exist_ok=True)
 df = pd.read_csv(csv_input, dtype=str)  # reading all values as strings to prevent auto-formatting in excel
 df.to_excel(excel_output, index=False)
 
-# Desired filenames for each block
 block_names = [
     "raw_subject_characteristics",
     "raw_timing",
@@ -37,13 +36,13 @@ complete_indices = [i for i, col in enumerate(header) if isinstance(col, str) an
 try:
     id_index = header.index("Honest Broker Subject ID")
 except ValueError:
-    raise ValueError("❌ 'Honest Broker Subject ID' not found.")
+    raise ValueError("Honest Broker Subject ID' not found.")
 
 start_idx = id_index + 1
 
 for block_num, end_idx in enumerate(complete_indices, start=0):  
     if block_num >= len(block_names):
-        print(f"⚠️ Skipping block {block_num+1} - No matching name in block_names list.")
+        print(f"Skipping block {block_num+1} - No matching name in block_names list.")
         continue
 
     wb_out = Workbook()
